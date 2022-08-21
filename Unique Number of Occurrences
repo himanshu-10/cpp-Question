@@ -1,0 +1,43 @@
+class Solution {
+public:
+    bool uniqueOccurrences(vector<int>& arr) {
+       vector<int>ans;
+        // sort the given array
+        sort(arr.begin(),arr.end());
+        
+        // counting the occurence
+        
+        int count = 1;
+        for(int i=0; i<arr.size();i++){
+            if(i+1 < arr.size()){      // check element is in the arry
+                if(arr[i]==arr[i+1]){
+                    count++;
+                }
+                else{
+                    ans.push_back(count);
+                    count = 1;
+                }
+            }
+            else{
+                ans.push_back(count);
+            }
+        }
+        // occurence are stored in ans vector , now sort the ans vector
+        
+        sort(ans.begin(),ans.end());
+        
+        //check the repetation of occurence 
+        //if repetation is found --> return false
+       //   else return true
+        
+        for(int i =0; i<ans.size();i++){
+            if(i+1 < ans.size()){
+                if(ans[i] == ans[i+1]){
+                    return false;
+                }
+                
+            }
+        }
+        return true;
+    }
+};

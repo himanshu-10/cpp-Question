@@ -1,0 +1,59 @@
+#include<iostream>
+using namespace std;
+
+int getPivot(int arr[], int size){
+    int s = 0;
+    int e = size -1;
+    int mid = s+(e-s)/2;
+
+    while(s<e){
+        if(arr[mid] >= arr[0]){
+            s = mid+1;
+        }
+        else{
+            e = mid;
+        }
+         mid = s+(e-s)/2;
+
+    }
+    return s;
+}
+
+int binarySearch( int arr[] ,int s, int e,int key){
+
+    int mid = s+(e-s)/2;
+    while(s<=e){
+        if(arr[mid] == key){
+            return mid;
+        }
+        else if(arr[mid] < key){
+            s = mid +1;
+        }
+        else{
+            e = mid-1;
+        }
+        mid = s+(e-s)/2;
+    }
+}
+ 
+int search(int arr[],int n, int key){
+     int s=0,e=n-1,ans=0;
+
+     int pivot_res = getPivot(arr,n);
+    
+    if(arr[pivot_res] <= key && key <= arr[e]){
+        // binarySearch on 2nd line
+         ans = binarySearch(arr,pivot_res,e,key);
+    }
+    else{
+        // binarySearch on 1st line 
+        ans  =  binarySearch(arr,s,pivot_res,key);
+    }
+    return ans;
+}
+
+int main(){
+
+    int arr[5] = {7,9,1,2,3};
+    cout << "element index  is " << search(arr,5,7);
+}

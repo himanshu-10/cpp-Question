@@ -1,3 +1,8 @@
+// you have given a numbers , you have to print the digits      
+      // i/p : 4578
+       // o/p : four five seven eight
+       
+
 #include<iostream>
 using namespace std;
 

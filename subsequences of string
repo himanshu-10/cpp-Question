@@ -1,0 +1,46 @@
+/*
+input : "abc" is a string
+output : ["","a","b","c","ab","bc","ac","abc"]
+          returing all the subsequences of input string.
+*/          
+
+#include<iostream>
+using namespace std;
+
+int subs(string input, string output[]){
+
+    // base case
+    if(input.empty()){      // .empty check for variable present or not
+        output[0] = "";
+        return 1;
+    }
+
+    string smallString = input.substr(1);
+
+    // recursion
+    int smallOutputSize = subs(smallString,output);
+
+    // small calculation
+    for(int i = 0; i < smallOutputSize; i++){
+        output[i + smallOutputSize] = input[0] + output[i];
+    }
+    return 2*smallOutputSize;
+
+}
+
+int main(){
+
+    string input;
+    cin >> input;
+
+    // dynamically made the o/p string
+    string* output = new string[1000];
+
+    // storing the o/p value no. to count variable
+    int count = subs(input,output);
+    
+    // print the o/p array for count 
+    for(int i =0; i < count; i++){
+        cout << output[i] << endl;
+    }
+}

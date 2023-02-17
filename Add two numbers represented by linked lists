@@ -1,0 +1,119 @@
+/*
+
+Given two decimal numbers represented by two linked lists of size N and M respectively.
+The task is to return a linked list that represents the sum of these two numbers.
+
+For example:
+The number 190 will be represented by the linked list, 1->9->0->null, 
+similarly 25 by 2->5->null. 
+Sum of these two numbers is 190 + 25 = 215, which will be represented by 2->1->5->null.
+You are required to return the head of the linked list 2->1->5->null.
+
+*/
+
+class Solution
+{
+    private:
+    
+        Node* reverse(Node* head){
+        Node* curr = head;
+        Node* prev = NULL;
+        Node* next = NULL;
+        
+        while(curr != NULL){
+            next = curr -> next;
+            curr -> next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+    
+    void insertAtTail(struct Node* &head, struct Node* &tail,int val){
+       
+       Node* temp = new Node(val);
+       
+        if(head == NULL){
+            // empty list
+            head = temp;
+            tail = temp;
+            return ;
+        }
+        else{
+            // list is not empty
+            tail -> next = temp;
+            tail = temp;
+        }
+    }
+    
+    struct Node* add(struct Node* first, struct Node* second){
+        int carry = 0;
+        
+        Node* ansHead = NULL;
+        Node* ansTail = NULL;
+        
+        // list size same 
+        while(first!= NULL && second!= NULL){
+            
+              int sum = carry + first -> data + second -> data;
+              
+              int digit = sum % 10;
+             
+             // create node and add in ans LL
+              insertAtTail(ansHead , ansTail, digit);
+              
+              carry = sum/10;
+              first = first -> next;
+              second = second -> next;
+        }
+        
+        // 1st list is large in size and 2nd list is small in size
+        while(first != NULL){
+            int sum = carry + first -> data;
+            int digit = sum % 10;
+            // create node and add in ans LL
+            insertAtTail(ansHead , ansTail, digit);
+            carry = sum/10;
+             first = first -> next;
+        }
+        
+        // 2st list is large in size and 1nd list is small in size
+        while(second != NULL){
+            int sum = carry + second -> data;
+             int digit = sum % 10;
+            // create node and add in ans LL
+            insertAtTail(ansHead , ansTail, digit);
+            carry = sum/10;
+            second = second -> next;
+        }
+        
+        // koi carry extra bach gya
+        while(carry != 0){
+            int sum = carry;
+             int digit = sum % 10;
+            // create node and add in ans LL
+            insertAtTail(ansHead , ansTail, digit);
+            carry = sum/10;
+        }
+        return ansHead;
+      
+    }
+    
+    public:
+    //Function to add two numbers represented by linked list.
+    struct Node* addTwoLists(struct Node* first, struct Node* second)
+    {
+        // step 1 : reverse the list
+        first = reverse(first);
+        second = reverse(second);
+        
+        // step 2 - add 2 list
+        Node* ans = add(first,second);
+        
+        // step3 
+        ans = reverse(ans);
+        
+        return ans;
+        
+    }
+};
